@@ -1,5 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
-
+//https://vanhunteradams.com/Pico/Animal_Movement/Boids-algorithm.html
 using Moaboids;
 using Raylib_cs;
 
@@ -57,11 +57,44 @@ while (!Raylib.WindowShouldClose())
     Raylib.BeginDrawing();
     Raylib.ClearBackground(Color.WHITE);
     
-    foreach (var boid in boids1)
+    /*foreach (var boid in boids1)
         Raylib.DrawCircle(boid.X, boid.Y, 2, Color.RED);
     
     foreach (var boid in boids2)
-        Raylib.DrawCircle(boid.X, boid.Y, 2, Color.BLUE);
+        Raylib.DrawCircle(boid.X, boid.Y, 2, Color.BLUE);*/
+
+    foreach (var boid in boids1)
+    {
+        var xposAvg = 0.0;
+        var yposAvg = 0.0;
+        var xvelAvg = 0.0;
+        var yvelAvg = 0.0;
+        var neighboringBoids = 0;
+        var closeDx = 0.0;
+        var closeDy = 0.0;
+
+        foreach (var otherBoid in boids1.Where(x => x.Id != boid.Id))
+        {
+            
+            //Compute differences in x and y coordinates
+            var dx = boid.X - otherBoid.X;
+            var dy = boid.Y - otherBoid.Y;
+            
+            //Are both those differences less than the visual range?
+            if (Math.Abs(dx) < visualRange && Math.Abs(dy) < visualRange)
+            {
+                var squaredDistance = dx * dx + dy * dy;
+                var distance = Math.Sqrt(squaredDistance);
+                
+                if(distance < protectedRange)
+                {
+                    closeDx += dx - otherBoid.X;
+                    closeDy += dy - otherBoid.Y;
+                }
+            }
+
+        }
+    }
 
     Raylib.EndDrawing();
 }
