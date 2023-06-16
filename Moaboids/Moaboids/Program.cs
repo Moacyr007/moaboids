@@ -56,7 +56,7 @@ while (!Raylib.WindowShouldClose())
 {
     Raylib.BeginDrawing();
     Raylib.ClearBackground(Color.WHITE);
-    
+
     /*foreach (var boid in boids1)
         Raylib.DrawCircle(boid.X, boid.Y, 2, Color.RED);
     
@@ -75,24 +75,22 @@ while (!Raylib.WindowShouldClose())
 
         foreach (var otherBoid in boids1.Where(x => x.Id != boid.Id))
         {
-            
             //Compute differences in x and y coordinates
             var dx = boid.X - otherBoid.X;
             var dy = boid.Y - otherBoid.Y;
-            
+
             //Are both those differences less than the visual range?
             if (Math.Abs(dx) < visualRange && Math.Abs(dy) < visualRange)
             {
                 var squaredDistance = dx * dx + dy * dy;
                 var distance = Math.Sqrt(squaredDistance);
-                
-                if(distance < protectedRange)
+
+                if (distance < protectedRange)
                 {
                     closeDx += dx - otherBoid.X;
                     closeDy += dy - otherBoid.Y;
                 }
             }
-
         }
     }
 
@@ -100,4 +98,3 @@ while (!Raylib.WindowShouldClose())
 }
 
 Raylib.CloseWindow();
-
