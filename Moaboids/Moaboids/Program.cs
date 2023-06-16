@@ -10,13 +10,20 @@ const int WindowHeight = 480;
 
 const double protectedRange = 8;
 const double visualRange = 40;
+const double visualRangeSquared = visualRange * visualRange;
 const double centeringFactor = 0.00005;
 const double avoidFactor = 0.05;
+const double turnFactor = 0.05;
 const double matchingFactor = 0.05;
 const double minSpeed = 3;
 const double maxSpeed = 6;
 const double maxBias = 0.01;
 const double biasIncrement = 0.00004;
+
+const int topMargin = 50;
+const int bottomMargin = 50;
+const int leftMargin = 50;
+const int rightMargin = 50;
 
 const int numberOfBoids1 = 100;
 const int numberOfBoids2 = 100;
@@ -65,6 +72,8 @@ while (!Raylib.WindowShouldClose())
 
     foreach (var boid in boids1)
     {
+        Raylib.DrawCircle(boid.X, boid.Y, 2, Color.RED);
+
         var xposAvg = 0.0;
         var yposAvg = 0.0;
         var xvelAvg = 0.0;
@@ -83,15 +92,80 @@ while (!Raylib.WindowShouldClose())
             if (Math.Abs(dx) < visualRange && Math.Abs(dy) < visualRange)
             {
                 var squaredDistance = dx * dx + dy * dy;
-                var distance = Math.Sqrt(squaredDistance);
 
-                if (distance < protectedRange)
+                if (squaredDistance < protectedRange)
                 {
                     closeDx += dx - otherBoid.X;
                     closeDy += dy - otherBoid.Y;
                 }
+                else if (squaredDistance < visualRangeSquared)
+                {
+                    xposAvg += otherBoid.X;
+                    yposAvg += otherBoid.Y;
+                    xvelAvg += otherBoid.Vx;
+                    yvelAvg += otherBoid.Vy;
+                    
+                    neighboringBoids++;
+                }
+                {
+                    
+                }
             }
         }
+
+        if (neighboringBoids > 0)
+        {
+            xposAvg /= neighboringBoids;
+            yposAvg /= neighboringBoids;
+            xvelAvg /= neighboringBoids;
+            yvelAvg /= neighboringBoids;
+            
+            boid.Vx += (int) (boid.Vx + 
+                              (xposAvg - boid.X)*centeringFactor + 
+                              (xvelAvg - boid.Vx)*matchingFactor);
+            
+            boid.Vy += (int) (boid.Vy +
+                              (yposAvg - boid.Y)*centeringFactor +
+                                (yvelAvg - boid.Vy)*matchingFactor);
+        }
+        
+        boid.Vx += (int) (closeDx * avoidFactor);
+        boid.Vy += (int) (closeDy * avoidFactor);
+
+        //If the boid is near an edge, make it turn by turnfactor
+        //(this describes a box, will vary based on boundary conditions)
+
+        if (boid.Y> WindowHeight - topMargin)
+            boid.Vy = (int)(boid.Vy + turnFactor);
+
+        if (boid.X > WindowWidth - rightMargin)
+            boid.Vx = (int)(boid.Vx - turnFactor);
+
+        if (boid.X > leftMargin)
+            boid.Vx = (int)(boid.Vx - turnFactor);
+        
+        if (boid.Y < bottomMargin)
+            boid.Vy = (int)(boid.Vy + turnFactor);
+
+        var speed = Math.Sqrt(boid.Vx * boid.Vx + boid.Vy * boid.Vy);
+
+        /*switch (speed)
+        {
+            case < minSpeed:
+                boid.Vx = (int)((boid.Vx/speed) * minSpeed);
+                boid.Vy = (int)((boid.Vy/speed) * minSpeed);
+                break;
+            case > maxSpeed:
+                boid.Vx = (int)((boid.Vx/speed) * maxSpeed);
+                boid.Vy = (int)((boid.Vy/speed) * maxSpeed);
+                break;
+        }*/
+
+        //Atualiza posição do boid
+        boid.X += boid.Vx;
+        boid.Y += boid.Vy;
+        
+        Console.WriteLine("Boid X: " + boid.X + " Boid Y: " + boid.Y);
     }
 
     Raylib.EndDrawing();
