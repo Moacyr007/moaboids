@@ -72,7 +72,7 @@ while (!Raylib.WindowShouldClose())
 
     foreach (var boid in boids1)
     {
-        Raylib.DrawCircle(boid.X, boid.Y, 2, Color.RED);
+        Raylib.DrawCircle((int)boid.X, (int)boid.Y, 2, Color.RED);
 
         var xposAvg = 0.0;
         var yposAvg = 0.0;
@@ -120,46 +120,46 @@ while (!Raylib.WindowShouldClose())
             xvelAvg /= neighboringBoids;
             yvelAvg /= neighboringBoids;
             
-            boid.Vx += (int) (boid.Vx + 
+            boid.Vx +=  (boid.Vx + 
                               (xposAvg - boid.X)*centeringFactor + 
                               (xvelAvg - boid.Vx)*matchingFactor);
             
-            boid.Vy += (int) (boid.Vy +
+            boid.Vy +=  (boid.Vy +
                               (yposAvg - boid.Y)*centeringFactor +
                                 (yvelAvg - boid.Vy)*matchingFactor);
         }
         
-        boid.Vx += (int) (closeDx * avoidFactor);
-        boid.Vy += (int) (closeDy * avoidFactor);
+        boid.Vx +=  (closeDx * avoidFactor);
+        boid.Vy +=  (closeDy * avoidFactor);
 
         //If the boid is near an edge, make it turn by turnfactor
         //(this describes a box, will vary based on boundary conditions)
 
         if (boid.Y> WindowHeight - topMargin)
-            boid.Vy = (int)(boid.Vy + turnFactor);
+            boid.Vy = (boid.Vy + turnFactor);
 
         if (boid.X > WindowWidth - rightMargin)
-            boid.Vx = (int)(boid.Vx - turnFactor);
+            boid.Vx = (boid.Vx - turnFactor);
 
         if (boid.X > leftMargin)
-            boid.Vx = (int)(boid.Vx - turnFactor);
+            boid.Vx = (boid.Vx - turnFactor);
         
         if (boid.Y < bottomMargin)
-            boid.Vy = (int)(boid.Vy + turnFactor);
+            boid.Vy = (boid.Vy + turnFactor);
 
         var speed = Math.Sqrt(boid.Vx * boid.Vx + boid.Vy * boid.Vy);
 
-        /*switch (speed)
+        switch (speed)
         {
             case < minSpeed:
-                boid.Vx = (int)((boid.Vx/speed) * minSpeed);
-                boid.Vy = (int)((boid.Vy/speed) * minSpeed);
+                boid.Vx = ((boid.Vx/speed) * minSpeed);
+                boid.Vy = ((boid.Vy/speed) * minSpeed);
                 break;
             case > maxSpeed:
-                boid.Vx = (int)((boid.Vx/speed) * maxSpeed);
-                boid.Vy = (int)((boid.Vy/speed) * maxSpeed);
+                boid.Vx = ((boid.Vx/speed) * maxSpeed);
+                boid.Vy = ((boid.Vy/speed) * maxSpeed);
                 break;
-        }*/
+        }
 
         //Atualiza posição do boid
         boid.X += boid.Vx;

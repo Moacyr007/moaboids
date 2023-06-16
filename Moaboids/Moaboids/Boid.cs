@@ -3,8 +3,8 @@
 public class Boid
 {
     public Guid Id { get; set; } = Guid.NewGuid();
-    public int X { get; set; }
-    public int Y { get; set; }
-    public int Vx { get; set; }
-    public int Vy { get; set; }
+    public double X { get; set; }
+    public double Y { get; set; }
+    public double Vx { get; set; }
+    public double Vy { get; set; }
 }
