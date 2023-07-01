@@ -63,6 +63,8 @@ while (!Raylib.WindowShouldClose())
 {
     Raylib.BeginDrawing();
     Raylib.ClearBackground(Color.WHITE);
+    Raylib.DrawRectangle(leftMargin, topMargin, WindowWidth - leftMargin - rightMargin,
+        WindowHeight - bottomMargin - topMargin, Color.LIGHTGRAY);
 
     /*foreach (var boid in boids1)
         Raylib.DrawCircle(boid.X, boid.Y, 2, Color.RED);
