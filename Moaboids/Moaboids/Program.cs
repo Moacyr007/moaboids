@@ -4,8 +4,6 @@
 using Moaboids;
 using Raylib_cs;
 
-Console.WriteLine("Hello, World!");
-
 const int WindowWidth = 800;
 const int WindowHeight = 480;
 
@@ -14,17 +12,17 @@ const double visualRange = 40;
 const double visualRangeSquared = visualRange * visualRange;
 const double centeringFactor = 0.00005;
 const double avoidFactor = 0.05;
-const double turnFactor = 0.05;
+const double turnFactor = 0.2;
 const double matchingFactor = 0.05;
-const double minSpeed = 1;
-const double maxSpeed = 2;
+const double minSpeed = 3;
+const double maxSpeed = 6;
 const double maxBias = 0.01;
 const double biasIncrement = 0.00004;
 
-const int topMargin = 50;
-const int bottomMargin = 50;
-const int leftMargin = 50;
-const int rightMargin = 50;
+const int topMargin = 100;
+const int bottomMargin = 100;
+const int leftMargin = 100;
+const int rightMargin = 100;
 
 const int numberOfBoids1 = 100;
 const int numberOfBoids2 = 100;
