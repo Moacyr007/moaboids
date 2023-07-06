@@ -15,8 +15,8 @@ const double centeringFactor = 0.00005;
 const double avoidFactor = 0.05;
 const double turnFactor = 0.05;
 const double matchingFactor = 0.05;
-const double minSpeed = 3;
-const double maxSpeed = 6;
+const double minSpeed = 1;
+const double maxSpeed = 2;
 const double maxBias = 0.01;
 const double biasIncrement = 0.00004;
 
@@ -137,17 +137,12 @@ while (!Raylib.WindowShouldClose())
         //If the boid is near an edge, make it turn by turnfactor
         //(this describes a box, will vary based on boundary conditions)
 
-        if (boid.Y> WindowHeight - topMargin)
-            boid.Vy = (boid.Vy + turnFactor);
-
-        if (boid.X > WindowWidth - rightMargin)
-            boid.Vx = (boid.Vx - turnFactor);
-
-        if (boid.X > leftMargin)
-            boid.Vx = (boid.Vx - turnFactor);
+        if (boid.X < leftMargin) { boid.Vx += turnFactor; }
+        if (boid.X > rightMargin) { boid.Vx -= turnFactor; }
+        if (boid.Y > bottomMargin) { boid.Vy -= turnFactor; }
+        if (boid.Y < topMargin) { boid.Vy += turnFactor; }
         
-        if (boid.Y < bottomMargin)
-            boid.Vy = (boid.Vy + turnFactor);
+        
 
         var speed = Math.Sqrt(boid.Vx * boid.Vx + boid.Vy * boid.Vy);
 
