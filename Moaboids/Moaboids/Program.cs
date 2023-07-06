@@ -4,8 +4,8 @@
 using Moaboids;
 using Raylib_cs;
 
-const int WindowWidth = 800;
-const int WindowHeight = 480;
+const int windowWidth = 800;
+const int windowHeight = 480;
 
 const double protectedRange = 8;
 const double visualRange = 40;
@@ -38,8 +38,8 @@ for (var i = 0; i < numberOfBoids1; i++)
 {
     boids1[i] = new Boid
     {
-        X = random.Next(0, WindowWidth),
-        Y = random.Next(0, WindowHeight),
+        X = random.Next(0, windowWidth),
+        Y = random.Next(0, windowHeight),
         Vx = random.Next(-5, 5),
         Vy = random.Next(-5, 5)
     };
@@ -49,21 +49,21 @@ for (var i = 0; i < numberOfBoids2; i++)
 {
     boids2[i] = new Boid
     {
-        X = random.Next(0, WindowWidth),
-        Y = random.Next(0, WindowHeight),
+        X = random.Next(0, windowWidth),
+        Y = random.Next(0, windowHeight),
         Vx = random.Next(-5, 5),
         Vy = random.Next(-5, 5)
     };
 }
 
-Raylib.InitWindow(WindowWidth, WindowHeight, "Moaboids");
+Raylib.InitWindow(windowWidth, windowHeight, "Moaboids");
 
 while (!Raylib.WindowShouldClose())
 {
     Raylib.BeginDrawing();
     Raylib.ClearBackground(Color.WHITE);
-    Raylib.DrawRectangle(leftMargin, topMargin, WindowWidth - leftMargin - rightMargin,
-        WindowHeight - bottomMargin - topMargin, Color.LIGHTGRAY);
+    Raylib.DrawRectangle(leftMargin, topMargin, windowWidth - leftMargin - rightMargin,
+        windowHeight - bottomMargin - topMargin, Color.LIGHTGRAY);
 
     /*foreach (var boid in boids1)
         Raylib.DrawCircle(boid.X, boid.Y, 2, Color.RED);
